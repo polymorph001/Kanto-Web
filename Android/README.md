@@ -1,2 +1,1 @@
-# Helena2.0
-In-house Product Development Project
+This is the Android Project
