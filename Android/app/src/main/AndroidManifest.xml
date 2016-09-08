@@ -16,13 +16,16 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name">
+        </activity>
+        <activity android:name=".SigninActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".KnowYourCompanyLauncherActivity"></activity>
+        <activity android:name=".KnowYourCompanyLauncherActivity" />
+        <activity android:name=".ViewQuestionsActivity"></activity>
     </application>
 
 </manifest>
