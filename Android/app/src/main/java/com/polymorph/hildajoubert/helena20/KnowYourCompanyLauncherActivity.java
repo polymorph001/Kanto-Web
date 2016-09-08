@@ -18,7 +18,9 @@ public class KnowYourCompanyLauncherActivity extends AppCompatActivity implement
     private void setupViews(){
 
         Button b1 = (Button) findViewById(R.id.button_launcher_QuestionsToAnswer);
+        b1.setOnClickListener(this);
         Button b2 = (Button) findViewById(R.id.button_launcher_ListOfQuestions);
+        b2.setOnClickListener(this);
     }
 
 
@@ -30,8 +32,8 @@ public class KnowYourCompanyLauncherActivity extends AppCompatActivity implement
             case R.id.button_launcher_QuestionsToAnswer:
 
                 break;
-            case  R.id.button_launcher_ListOfQuestions:
-                
+            case R.id.button_launcher_ListOfQuestions:
+
                 break;
 
         }
