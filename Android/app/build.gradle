@@ -8,6 +8,7 @@ buildscript {
         firebase_version = '9.4.0'
         rxandroid_version = '1.2.1'
         rxjava_version = '1.1.7'
+        rxbinding_version = '0.4.0'
     }
 
     repositories {
@@ -74,6 +75,12 @@ dependencies {
     compile 'com.firebaseui:firebase-ui:0.5.2'
     compile 'com.firebaseui:firebase-ui-database:0.5.2'
     compile 'com.firebaseui:firebase-ui-auth:0.5.2'
+
+    compile "com.jakewharton.rxbinding:rxbinding-design:$rxbinding_version"
+    compile "com.jakewharton.rxbinding:rxbinding:$rxbinding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-support-v4:$rxbinding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rxbinding_version"
+    compile "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:$rxbinding_version"
 
     compile "io.reactivex:rxandroid:$rxandroid_version"
     // Because RxAndroid releases are few and far between, it is recommended you also

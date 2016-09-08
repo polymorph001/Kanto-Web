@@ -2,9 +2,8 @@ package com.polymorph.hildajoubert.helena20.ui.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -12,28 +11,38 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.jakewharton.rxbinding.view.RxView;
 import com.polymorph.hildajoubert.helena20.MainApplication;
 import com.polymorph.hildajoubert.helena20.R;
 import com.polymorph.hildajoubert.helena20.util.storage.Storage;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
-public class SigninActivity extends BaseActivity implements View.OnClickListener {
+public class SigninActivity extends BaseActivity {
 
     private static final String TAG = "EmailPassword";
 
-    private TextView mStatusTextView;
-    private TextView mDetailTextView;
-    private EditText mEmailField;
-    private EditText mPasswordField;
+    @BindView(R.id.status)
+    TextView mStatusTextView;
+    @BindView(R.id.detail)
+    TextView mDetailTextView;
+    @BindView(R.id.field_email)
+    EditText mEmailField;
+    @BindView(R.id.field_password)
+    EditText mPasswordField;
+    @BindView(R.id.email_sign_in_button)
+    View btnSignIn;
 
     Dialog dialog;
 
@@ -52,15 +61,6 @@ public class SigninActivity extends BaseActivity implements View.OnClickListener
 
         // Dagger 2 inject
         ((MainApplication) getApplication()).getAppComponent().inject(this);
-
-        // Views
-        mStatusTextView = (TextView) findViewById(R.id.status);
-        mDetailTextView = (TextView) findViewById(R.id.detail);
-        mEmailField = (EditText) findViewById(R.id.field_email);
-        mPasswordField = (EditText) findViewById(R.id.field_password);
-
-        // Buttons
-        findViewById(R.id.email_sign_in_button).setOnClickListener(this);
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
@@ -95,6 +95,21 @@ public class SigninActivity extends BaseActivity implements View.OnClickListener
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+
+        RxView.clicks(btnSignIn)
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter(new Func1<Void, Boolean>() {
+                    @Override
+                    public Boolean call(Void aVoid) {
+                        return validateForm();
+                    }
+                })
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        doLogin();
+                    }
+                });
     }
     // [END on_start_add_listener]
 
@@ -109,16 +124,15 @@ public class SigninActivity extends BaseActivity implements View.OnClickListener
     // [END on_stop_remove_listener]
 
 
-    private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
-        if (!validateForm()) {
-            return;
-        }
+    private void doLogin() {
+        final String email = mEmailField.getText().toString();
+        final String password = mPasswordField.getText().toString();
 
-       showProgressDialog();
+        showProgressDialog();
 
-
-        storage.signInWithEmailAndPassword(email, password)
+        Subscription sub = storage.signInWithEmailAndPassword(email, password)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
@@ -134,53 +148,31 @@ public class SigninActivity extends BaseActivity implements View.OnClickListener
                 .subscribe(new Action1<AuthResult>() {
                     @Override
                     public void call(AuthResult authResult) {
-
+                        // onNext
+                        if (authResult.getUser() == null) {
+                            mStatusTextView.setText(R.string.auth_failed);
+                        } else {
+                            showProfileActivity();
+                        }
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-
+                        // onError
+                        mStatusTextView.setText(R.string.auth_failed);
                     }
                 });
-
-//        // [START sign_in_with_email]
-//        mAuth.signInWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-//
-//                        // If sign in fails, display a message to the user. If sign in succeeds
-//                        // the auth state listener will be notified and logic to handle the
-//                        // signed in user can be handled in the listener.
-//                        if (!task.isSuccessful()) {
-//                            Log.w(TAG, "signInWithEmail:failed", task.getException());
-//                            Toast.makeText(SigninActivity.this, R.string.auth_failed,
-//                                    Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                        // [START_EXCLUDE]
-//                        if (!task.isSuccessful()) {
-//                            mStatusTextView.setText(R.string.auth_failed);
-//                        }
-//
-//                        if (task.isSuccessful()) {
-//                            showProfileActivity();
-//                        }
-//
-//                        hideProgressDialog();
-//                        // [END_EXCLUDE]
-//                    }
-//                });
-//        // [END sign_in_with_email]
+        subs.add(sub);
     }
 
     private void showProfileActivity() {
         startActivity(new Intent(this, ProfileActivity.class));
+
+        finish();
     }
 
     private void showProgressDialog() {
-         dialog = new Dialog(this);
+        dialog = new Dialog(this);
         dialog.show();
     }
 
@@ -210,9 +202,4 @@ public class SigninActivity extends BaseActivity implements View.OnClickListener
         return valid;
     }
 
-
-    @Override
-    public void onClick(View view) {
-        signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-    }
 }
