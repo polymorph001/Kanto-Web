@@ -1,4 +1,4 @@
-package com.polymorph.hildajoubert.helena20;
+package com.polymorph.hildajoubert.helena20.ui.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -17,8 +17,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.polymorph.hildajoubert.helena20.MainApplication;
+import com.polymorph.hildajoubert.helena20.R;
+import com.polymorph.hildajoubert.helena20.util.storage.Storage;
 
-public class SigninActivity extends AppCompatActivity implements View.OnClickListener {
+import javax.inject.Inject;
+
+import butterknife.ButterKnife;
+import rx.functions.Action1;
+
+public class SigninActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
 
@@ -30,14 +38,20 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
     Dialog dialog;
 
     private FirebaseAuth mAuth;
-
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    @Inject
+    Storage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+
+        ButterKnife.bind(this);
+
+        // Dagger 2 inject
+        ((MainApplication) getApplication()).getAppComponent().inject(this);
 
         // Views
         mStatusTextView = (TextView) findViewById(R.id.status);
@@ -103,36 +117,62 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
 
        showProgressDialog();
 
-        // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
+        storage.signInWithEmailAndPassword(email, password)
+                .doOnError(new Action1<Throwable>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(SigninActivity.this, R.string.auth_failed,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                        // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
-                            mStatusTextView.setText(R.string.auth_failed);
-                        }
-
-                        if (task.isSuccessful()) {
-                            showProfileActivity();
-                        }
-
+                    public void call(Throwable throwable) {
                         hideProgressDialog();
-                        // [END_EXCLUDE]
+                    }
+                })
+                .doOnNext(new Action1<AuthResult>() {
+                    @Override
+                    public void call(AuthResult authResult) {
+                        hideProgressDialog();
+                    }
+                })
+                .subscribe(new Action1<AuthResult>() {
+                    @Override
+                    public void call(AuthResult authResult) {
+
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+
                     }
                 });
-        // [END sign_in_with_email]
+
+//        // [START sign_in_with_email]
+//        mAuth.signInWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+//
+//                        // If sign in fails, display a message to the user. If sign in succeeds
+//                        // the auth state listener will be notified and logic to handle the
+//                        // signed in user can be handled in the listener.
+//                        if (!task.isSuccessful()) {
+//                            Log.w(TAG, "signInWithEmail:failed", task.getException());
+//                            Toast.makeText(SigninActivity.this, R.string.auth_failed,
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+//
+//                        // [START_EXCLUDE]
+//                        if (!task.isSuccessful()) {
+//                            mStatusTextView.setText(R.string.auth_failed);
+//                        }
+//
+//                        if (task.isSuccessful()) {
+//                            showProfileActivity();
+//                        }
+//
+//                        hideProgressDialog();
+//                        // [END_EXCLUDE]
+//                    }
+//                });
+//        // [END sign_in_with_email]
     }
 
     private void showProfileActivity() {

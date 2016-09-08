@@ -1,11 +1,10 @@
-package com.polymorph.hildajoubert.helena20;
+package com.polymorph.hildajoubert.helena20.ui.activity;
 
 import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.polymorph.hildajoubert.helena20.R;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
