@@ -1,5 +1,6 @@
 package com.polymorph.hildajoubert.helena20;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,7 +34,8 @@ public class KnowYourCompanyLauncherActivity extends AppCompatActivity implement
 
                 break;
             case R.id.button_launcher_ListOfQuestions:
-
+                Intent launchListIntent = new Intent(this, ViewQuestionsActivity.class);
+                startActivity(launchListIntent);
                 break;
 
         }
