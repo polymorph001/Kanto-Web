@@ -8,16 +8,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action0;
+import rx.subscriptions.Subscriptions;
 
 public class FirebaseStorage implements Storage {
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth firebaseAuth;
 
     public FirebaseStorage(@NonNull final Context context) {
-        mAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -26,7 +29,32 @@ public class FirebaseStorage implements Storage {
         return Observable.create(new Observable.OnSubscribe<AuthResult>() {
             @Override
             public void call(final Subscriber<? super AuthResult> subscriber) {
-                execute(subscriber, mAuth.signInWithEmailAndPassword(email, password));
+                execute(subscriber, firebaseAuth.signInWithEmailAndPassword(email, password));
+            }
+        });
+    }
+
+    @Override
+    public Observable<FirebaseUser> observeAuthState() {
+        return Observable.create(new Observable.OnSubscribe<FirebaseUser>() {
+            @Override
+            public void call(final Subscriber<? super FirebaseUser> subscriber) {
+                final FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
+                    @Override
+                    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                        if (!subscriber.isUnsubscribed()) {
+                            subscriber.onNext(firebaseAuth.getCurrentUser());
+                        }
+                    }
+                };
+                firebaseAuth.addAuthStateListener(authStateListener);
+
+                subscriber.add(Subscriptions.create(new Action0() {
+                    @Override
+                    public void call() {
+                        firebaseAuth.removeAuthStateListener(authStateListener);
+                    }
+                }));
             }
         });
     }

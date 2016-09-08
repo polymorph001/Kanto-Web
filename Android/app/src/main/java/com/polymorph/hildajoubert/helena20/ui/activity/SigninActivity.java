@@ -46,8 +46,6 @@ public class SigninActivity extends BaseActivity {
 
     Dialog dialog;
 
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Inject
     Storage storage;
@@ -62,41 +60,30 @@ public class SigninActivity extends BaseActivity {
         // Dagger 2 inject
         ((MainApplication) getApplication()).getAppComponent().inject(this);
 
-        // [START initialize_auth]
-        mAuth = FirebaseAuth.getInstance();
-        // [END initialize_auth]
-
-        // [START auth_state_listener]
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-                // [START_EXCLUDE]
-                updateUI(user);
-                // [END_EXCLUDE]
-            }
-        };
-        // [END auth_state_listener]
     }
 
-    private void updateUI(FirebaseUser user) {
-
-    }
-
-    // [START on_start_add_listener]
     @Override
     public void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
 
-        RxView.clicks(btnSignIn)
+        Subscription subAuthState = storage.observeAuthState()
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter(new Func1<FirebaseUser, Boolean>() {
+                    @Override
+                    public Boolean call(FirebaseUser firebaseUser) {
+                        return firebaseUser != null;
+                    }
+                })
+                .subscribe(new Action1<FirebaseUser>() {
+                    @Override
+                    public void call(FirebaseUser firebaseUser) {
+                        // User is signed in
+                        showProfileActivity();
+                    }
+                });
+        subs.add(subAuthState);
+
+        Subscription subBtn = RxView.clicks(btnSignIn)
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(new Func1<Void, Boolean>() {
                     @Override
@@ -110,19 +97,13 @@ public class SigninActivity extends BaseActivity {
                         doLogin();
                     }
                 });
+        subs.add(subBtn);
     }
-    // [END on_start_add_listener]
 
-    // [START on_stop_remove_listener]
     @Override
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
     }
-    // [END on_stop_remove_listener]
-
 
     private void doLogin() {
         final String email = mEmailField.getText().toString();
