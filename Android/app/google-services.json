@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "676126391514",
-    "firebase_url": "https://friendlychat-a09eb.firebaseio.com",
-    "project_id": "friendlychat-a09eb",
-    "storage_bucket": "friendlychat-a09eb.appspot.com"
+    "project_number": "558644249736",
+    "firebase_url": "https://helena-4a3f6.firebaseio.com",
+    "project_id": "helena-4a3f6",
+    "storage_bucket": "helena-4a3f6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:676126391514:android:b5d75907de594a2d",
+        "mobilesdk_app_id": "1:558644249736:android:ac32af40f6b72cfc",
         "android_client_info": {
-          "package_name": "com.google.firebase.codelab.friendlychat"
+          "package_name": "com.polymorph.hildajoubert.helena20"
         }
       },
       "oauth_client": [
         {
-          "client_id": "676126391514-s3l8bj3grkjvl5s8hpslksj8e3rsfcm5.apps.googleusercontent.com",
+          "client_id": "558644249736-3fl155kj8lb1a7j012m8c643slhe3brl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCIkWwZeIFcghVYx1imFzK3DyQ9q4CNXS0"
+          "current_key": "AIzaSyAx8BVBgubyCYyLwtH9rcJWdPd8wIQEXGM"
         }
       ],
       "services": {
