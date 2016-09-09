@@ -22,7 +22,7 @@ public class SplashActivity extends BaseActivity {
         super.onStart();
 
         Observable.just(1)
-                .delay(3, TimeUnit.SECONDS)
+                .delay(2, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Integer>() {
                     @Override
