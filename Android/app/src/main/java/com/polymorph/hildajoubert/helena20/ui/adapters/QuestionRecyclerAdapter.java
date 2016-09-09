@@ -12,8 +12,10 @@ import android.widget.TextView;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.polymorph.hildajoubert.helena20.R;
+import com.polymorph.hildajoubert.helena20.StaticHolder;
 import com.polymorph.hildajoubert.helena20.models.QuestionRowItem;
 import com.polymorph.hildajoubert.helena20.ui.activity.AnswerQuestionsActivity;
+import com.polymorph.hildajoubert.helena20.ui.activity.ViewAnswersActivity;
 
 import java.util.List;
 
@@ -74,7 +76,7 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         }
 
-        public void setQuestion(QuestionRowItem questionItem) {
+        public void setQuestion(final QuestionRowItem questionItem) {
             this.questionRowItem = questionItem;
 
             this.question.setText(questionItem.getQuestion().getQuestion());
@@ -86,9 +88,15 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, AnswerQuestionsActivity.class);
-                    intent.putExtra("questionId", questionRowItem.getQuestion().getId());
-                    context.startActivity(intent);
+                    if(questionItem.isAnsweredByMe()) {
+                        Intent intent = new Intent(context, ViewAnswersActivity.class);
+                        StaticHolder.questionRowItem = questionItem;
+                        context.startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(context, AnswerQuestionsActivity.class);
+                        intent.putExtra("questionId", questionRowItem.getQuestion().getId());
+                        context.startActivity(intent);
+                    }
                 }
             });
         }

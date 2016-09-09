@@ -7,12 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.polymorph.hildajoubert.helena20.R;
+import com.polymorph.hildajoubert.helena20.StaticHolder;
 import com.polymorph.hildajoubert.helena20.models.QuestionRowItem;
 import com.polymorph.hildajoubert.helena20.ui.adapters.AnswerRecyclerAdapter;
 
 public class ViewAnswersActivity extends AppCompatActivity {
 
-    final static String QUESTION_ITEM_KEY = "questionItemKey";
+    public final static String QUESTION_ITEM_KEY = "questionItemKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class ViewAnswersActivity extends AppCompatActivity {
         RecyclerView answersRecycler = (RecyclerView) findViewById(R.id.recyclerView_viewAnswers_listOfAnswers);
         answersRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        QuestionRowItem item = (QuestionRowItem) getIntent().getSerializableExtra(QUESTION_ITEM_KEY);
+        QuestionRowItem item = StaticHolder.questionRowItem;
         AnswerRecyclerAdapter adapter = new AnswerRecyclerAdapter(item.getAnswers());
 
         answersRecycler.setAdapter(adapter);

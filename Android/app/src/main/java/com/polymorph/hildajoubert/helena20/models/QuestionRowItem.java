@@ -1,5 +1,8 @@
 package com.polymorph.hildajoubert.helena20.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.Serializable;
@@ -9,7 +12,7 @@ import java.util.List;
  * Created by Percy on 2016/09/09.
  */
 
-public class QuestionRowItem implements Serializable{
+public class QuestionRowItem implements Parcelable{
 
     private Question question;
     private List<Answer> answers;
@@ -17,6 +20,21 @@ public class QuestionRowItem implements Serializable{
     public QuestionRowItem(Question question) {
         this.question = question;
     }
+
+    protected QuestionRowItem(Parcel in) {
+    }
+
+    public static final Creator<QuestionRowItem> CREATOR = new Creator<QuestionRowItem>() {
+        @Override
+        public QuestionRowItem createFromParcel(Parcel in) {
+            return new QuestionRowItem(in);
+        }
+
+        @Override
+        public QuestionRowItem[] newArray(int size) {
+            return new QuestionRowItem[size];
+        }
+    };
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
@@ -50,5 +68,15 @@ public class QuestionRowItem implements Serializable{
         }
 
         return false;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
     }
 }
