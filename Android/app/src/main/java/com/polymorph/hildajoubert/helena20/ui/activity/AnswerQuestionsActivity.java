@@ -65,42 +65,36 @@ public class AnswerQuestionsActivity extends AppCompatActivity implements View.O
 
     private void submitQuestion() {
 
-        final ProgressDialog dialog = ProgressDialog.show(this, "", "Loading. Please wait...", true);
-
-        dialog.show();
-
-        final String questionId = "test-question01"; // TODO
-
         final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        Toast.makeText(AnswerQuestionsActivity.this, "NULL", Toast.LENGTH_SHORT).show();
+//        mDatabase.child("kyc").child("question-answer").child(questionId).addListenerForSingleValueEvent(
+//                new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        dialog.dismiss();
+//                        if (dataSnapshot != null && dataSnapshot.getValue() != null) {
+//            pointsId = rootDataReference.child("points").child(userId).push().getKey();*
 
-        mDatabase.child("kyc").child("question-answer").child(questionId).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        dialog.dismiss();
-                        if (dataSnapshot != null && dataSnapshot.getValue() != null) {
+        final String questionId = "test-question01"; // TODO
+        String userAnswer = answerEditText.getText().toString();
+        String answerId = mDatabase.child("question-answer").child(questionId).push().getKey();
+        String userUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                            String userAnswer = answerEditText.getText().toString();
-                            String answerId = "answer_0" + dataSnapshot.getChildrenCount();
-                            String userUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Answer answer = new Answer(userAnswer, answerId, questionId, userUID);
 
-                            Answer answer = new Answer(userAnswer, answerId, questionId, userUID);
+        mDatabase.child("kyc").child("question-answer").child(questionId).child(answerId).setValue(answer);
 
-                            mDatabase.child("kyc").child("question-answer").child(questionId).child(answerId).setValue(answer);
-
-                        } else {
-                            Toast.makeText(AnswerQuestionsActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        dialog.dismiss();
-                        Toast.makeText(AnswerQuestionsActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
-                    }
-                });
+//                        } else {
+//                            Toast.makeText(AnswerQuestionsActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                        dialog.dismiss();
+//                        Toast.makeText(AnswerQuestionsActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
     }
 
     @Override
