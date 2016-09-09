@@ -8,6 +8,7 @@ public class Question {
     private String createdBy;
     private String question;
     private String timestamp;
+    private String id;
 
     public Question() {
         // Default
@@ -23,5 +24,9 @@ public class Question {
 
     public String getTimestamp() {
         return timestamp;
+    }
+
+    public String getId() {
+        return id;
     }
 }

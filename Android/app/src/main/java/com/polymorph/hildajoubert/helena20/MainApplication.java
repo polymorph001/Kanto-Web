@@ -26,6 +26,8 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Iconify.with(new FontAwesomeModule());
+
         JodaTimeAndroid.init(this);
 
         Iconify.with(new FontAwesomeModule());
