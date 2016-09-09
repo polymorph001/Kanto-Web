@@ -24,10 +24,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.jakewharton.rxbinding.view.RxView;
+import com.polymorph.hildajoubert.helena20.MainApplication;
 import com.polymorph.hildajoubert.helena20.R;
+import com.polymorph.hildajoubert.helena20.util.storage.Storage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,12 +56,18 @@ public class ProfileActivity extends BaseActivity {
 
     Dialog dialog;
 
+    @Inject
+    Storage storage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         ButterKnife.bind(this);
+
+        // Dagger 2 inject
+        ((MainApplication) getApplication()).getAppComponent().inject(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -85,7 +95,7 @@ public class ProfileActivity extends BaseActivity {
 
     private void updateProfile() {
         showProgressDialog();
-        
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()

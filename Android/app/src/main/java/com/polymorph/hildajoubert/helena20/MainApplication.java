@@ -32,7 +32,6 @@ public class MainApplication extends Application {
 
         // Dagger 2 app component
         appComponent = createAppComponent();
-
     }
 
     private AppComponent createAppComponent() {
