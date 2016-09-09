@@ -1,6 +1,7 @@
 package com.polymorph.hildajoubert.helena20;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -121,8 +122,14 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
                             mStatusTextView.setText(R.string.auth_failed);
+                            return;
                         }
+
+
                         hideProgressDialog();
+
+                        Intent intent = new Intent(getApplicationContext(), KnowYourCompanyLauncherActivity.class);
+                        startActivity(intent);
                         // [END_EXCLUDE]
                     }
                 });
