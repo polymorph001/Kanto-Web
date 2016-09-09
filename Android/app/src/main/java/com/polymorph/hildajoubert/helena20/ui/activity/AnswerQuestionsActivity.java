@@ -1,13 +1,19 @@
 package com.polymorph.hildajoubert.helena20.ui.activity;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,7 +23,7 @@ import com.polymorph.hildajoubert.helena20.R;
 import com.polymorph.hildajoubert.helena20.models.Answer;
 import com.polymorph.hildajoubert.helena20.models.Question;
 
-public class AnswerQuestionsActivity extends AppCompatActivity implements View.OnClickListener{
+public class AnswerQuestionsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "AnswerQuestionsActivity";
     private TextView questionTextView;
@@ -55,16 +61,46 @@ public class AnswerQuestionsActivity extends AppCompatActivity implements View.O
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-
     }
 
     private void submitQuestion() {
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        final ProgressDialog dialog = ProgressDialog.show(this, "", "Loading. Please wait...", true);
 
-        Answer answer = new Answer(answerEditText.getText().toString(), "answerID", "questionID", "userID");
+        dialog.show();
 
-        mDatabase.child("kyc").child("test-user00").child("test-answer00").setValue(answer);
+        final String questionId = "test-question01"; // TODO
+
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        Toast.makeText(AnswerQuestionsActivity.this, "NULL", Toast.LENGTH_SHORT).show();
+
+        mDatabase.child("kyc").child("question-answer").child(questionId).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        dialog.dismiss();
+                        if (dataSnapshot != null && dataSnapshot.getValue() != null) {
+
+                            String userAnswer = answerEditText.getText().toString();
+                            String answerId = "answer_0" + dataSnapshot.getChildrenCount();
+                            String userUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                            Answer answer = new Answer(userAnswer, answerId, questionId, userUID);
+
+                            mDatabase.child("kyc").child("question-answer").child(questionId).child(answerId).setValue(answer);
+
+                        } else {
+                            Toast.makeText(AnswerQuestionsActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        dialog.dismiss();
+                        Toast.makeText(AnswerQuestionsActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override

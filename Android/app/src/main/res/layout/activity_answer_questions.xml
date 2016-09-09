@@ -28,29 +28,36 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/activity_horizontal_margin"
         android:gravity="bottom"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/et_answer_question_answer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:hint="Type answer here" />
+        android:orientation="vertical"
+        android:background="@color/buttonColor">
 
         <Button
             android:id="@+id/bt_answer_question_submit_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:textSize="17dp"
             android:text="Submit"
             android:textAllCaps="false"/>
-    </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_answer_question_answer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine"
+            android:layout_above="@id/bt_answer_question_submit_answer"
+            android:background="#FFF"
+            android:padding="5dp"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="Type answer here" />
+
+    </RelativeLayout>
 
 </LinearLayout>

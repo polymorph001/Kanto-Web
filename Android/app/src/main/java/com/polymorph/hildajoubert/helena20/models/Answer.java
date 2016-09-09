@@ -16,6 +16,9 @@ public class Answer {
 
     public Answer(String answer, String answerId, String questionId, String userId) {
         this.answer = answer;
+        this.answerId = answerId;
+        this.questionId = questionId;
+        this.userId = userId;
     }
 
     public String getAnswer() {
