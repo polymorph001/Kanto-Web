@@ -39,6 +39,7 @@ public class AnswerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         AnswerRowHolder uploadRow = (AnswerRowHolder) holder;
         uploadRow.setAnswer(answers.get(position).getAnswer());
+        uploadRow.setAuthor(answers.get(position).getEmail());
     }
     @Override
     public int getItemCount() {
@@ -48,6 +49,7 @@ public class AnswerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     class AnswerRowHolder extends RecyclerView.ViewHolder {
 
         private TextView answer;
+        private TextView author;
 
         public AnswerRowHolder(View view) {
             super(view);
@@ -56,10 +58,15 @@ public class AnswerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         private void setupViews(View view) {
             answer = (TextView) view.findViewById(R.id.textView_listItem_answer);
+            author = (TextView) view.findViewById(R.id.textView_listItem_author);
         }
 
         public void setAnswer(String answer) {
             this.answer.setText(answer);
+        }
+
+        public void setAuthor(String author) {
+            this.author.setText(author);
         }
 
     }
