@@ -39,18 +39,18 @@ public class KnowYourCompanyLauncherActivity extends BaseActivity implements Vie
     public void onStart() {
         super.onStart();
 
-        vProgress.setVisibility(View.VISIBLE);
-
-        Subscription sub = Observable.just(1)
-                .delay(10, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer integer) {
-                        vProgress.setVisibility(View.GONE);
-                    }
-                });
-        subs.add(sub);
+        // Example Progress
+//        vProgress.setVisibility(View.VISIBLE);
+//        Subscription sub = Observable.just(1)
+//                .delay(10, TimeUnit.SECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Action1<Integer>() {
+//                    @Override
+//                    public void call(Integer integer) {
+//                        vProgress.setVisibility(View.GONE);
+//                    }
+//                });
+//        subs.add(sub);
 
     }
 
