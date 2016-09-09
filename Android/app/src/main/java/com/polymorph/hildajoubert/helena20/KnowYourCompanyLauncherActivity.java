@@ -33,7 +33,7 @@ public class KnowYourCompanyLauncherActivity extends AppCompatActivity implement
         switch (view.getId()){
 
             case R.id.button_launcher_QuestionsToAnswer:
-
+                startActivity(new Intent(this, AnswerQuestionsActivity.class));
                 break;
             case R.id.button_launcher_ListOfQuestions:
                 Intent launchListIntent = new Intent(this, ViewQuestionsActivity.class);

@@ -15,6 +15,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jakewharton.rxbinding.view.RxView;
+import com.polymorph.hildajoubert.helena20.KnowYourCompanyLauncherActivity;
 import com.polymorph.hildajoubert.helena20.MainApplication;
 import com.polymorph.hildajoubert.helena20.R;
 import com.polymorph.hildajoubert.helena20.util.storage.Storage;
@@ -147,7 +148,7 @@ public class SigninActivity extends BaseActivity {
     }
 
     private void showProfileActivity() {
-        startActivity(new Intent(this, ProfileActivity.class));
+        startActivity(new Intent(this, KnowYourCompanyLauncherActivity.class));
 
         finish();
     }
