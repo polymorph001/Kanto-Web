@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Helena2.0</string>
+    <string name="app_name">Kanto</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

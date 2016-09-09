@@ -3,6 +3,8 @@ package com.polymorph.hildajoubert.helena20;
 import android.app.Application;
 import android.content.Context;
 
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.polymorph.hildajoubert.helena20.util.components.AppComponent;
 import com.polymorph.hildajoubert.helena20.util.components.DaggerAppComponent;
 import com.polymorph.hildajoubert.helena20.util.modules.StorageModule;
@@ -24,7 +26,11 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Iconify.with(new FontAwesomeModule());
+
         JodaTimeAndroid.init(this);
+
+        Iconify.with(new FontAwesomeModule());
 
         if (BuildConfig.DEBUG) {
             Timber.plant(new DebugTree());
