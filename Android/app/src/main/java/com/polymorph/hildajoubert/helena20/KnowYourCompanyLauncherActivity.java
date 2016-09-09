@@ -34,7 +34,8 @@ public class KnowYourCompanyLauncherActivity extends AppCompatActivity implement
                 startActivity(new Intent(this, AnswerQuestionsActivity.class));
                 break;
             case R.id.button_launcher_ListOfQuestions:
-
+                Intent launchListIntent = new Intent(this, ViewQuestionsActivity.class);
+                startActivity(launchListIntent);
                 break;
 
         }

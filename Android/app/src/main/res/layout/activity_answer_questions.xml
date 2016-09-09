@@ -24,7 +24,7 @@
             android:id="@+id/tv_answer_question_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="What is your favorite thing to do?"
+            android:text="-----------"
             android:textSize="18sp" />
     </LinearLayout>
 

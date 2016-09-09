@@ -26,6 +26,7 @@
         </activity>
         <activity android:name=".KnowYourCompanyLauncherActivity" />
         <activity android:name=".AnswerQuestionsActivity"></activity>
+        <activity android:name=".ViewQuestionsActivity"></activity>
     </application>
 
 </manifest>
