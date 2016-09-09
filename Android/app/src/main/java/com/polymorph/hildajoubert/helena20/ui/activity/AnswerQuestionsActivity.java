@@ -2,6 +2,7 @@ package com.polymorph.hildajoubert.helena20.ui.activity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.polymorph.hildajoubert.helena20.R;
+import com.polymorph.hildajoubert.helena20.StaticHolder;
 import com.polymorph.hildajoubert.helena20.models.Answer;
 import com.polymorph.hildajoubert.helena20.models.Question;
 
@@ -89,6 +91,9 @@ public class AnswerQuestionsActivity extends AppCompatActivity implements View.O
         Answer answer = new Answer(userAnswer, answerId, questionId, userUID, email);
 
         mDatabase.child("kyc").child("question-answer").child(questionId).child(answerId).setValue(answer);
+
+        Intent intent = new Intent(this, ViewQuestionsActivity.class);
+        startActivity(intent);
 
 //                        } else {
 //                            Toast.makeText(AnswerQuestionsActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
