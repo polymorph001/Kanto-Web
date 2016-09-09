@@ -1,9 +1,7 @@
 package com.polymorph.hildajoubert.helena20.ui.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +11,9 @@ import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
-import com.polymorph.hildajoubert.helena20.models.Question;
 import com.polymorph.hildajoubert.helena20.R;
 import com.polymorph.hildajoubert.helena20.models.QuestionRowItem;
+import com.polymorph.hildajoubert.helena20.ui.activity.AnswerQuestionsActivity;
 
 import java.util.List;
 
@@ -35,12 +33,12 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_question, parent, false);
-        SettingsUploadDocumentRowHolder rowHolder = new SettingsUploadDocumentRowHolder(view, context);
+        QuestionRowHolder rowHolder = new QuestionRowHolder(view, context);
         return rowHolder;
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        SettingsUploadDocumentRowHolder uploadRow = (SettingsUploadDocumentRowHolder) holder;
+        QuestionRowHolder uploadRow = (QuestionRowHolder) holder;
         uploadRow.setQuestion(questions.get(position));
     }
     @Override
@@ -48,7 +46,7 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         return (null != questions ? questions.size() : 0);
     }
 
-    class SettingsUploadDocumentRowHolder extends RecyclerView.ViewHolder {
+    class QuestionRowHolder extends RecyclerView.ViewHolder {
 
         private TextView question;
         private TextView date;
@@ -58,27 +56,22 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         private QuestionRowItem questionRowItem;
         private Context context;
+        private View view;
 
-        public SettingsUploadDocumentRowHolder(View view, Context context) {
+        public QuestionRowHolder(View view, Context context) {
             super(view);
             this.context = context;
-            setupViews(view);
+            this.view = view;
+            setupViews();
         }
 
-        private void setupViews(View view) {
+        private void setupViews() {
             question = (TextView) view.findViewById(R.id.textView_list_question);
             date = (TextView) view.findViewById(R.id.textView_list_date);
             author = (TextView) view.findViewById(R.id.textView_list_author);
             numberOfAnswers = (TextView) view.findViewById(R.id.textView_list_numberAnswers);
             answeredImage = (ImageView) view.findViewById(R.id.imageView_list_answered);
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("questionId",questionRowItem.getQuestion().getId());
-                }
-            });
         }
 
         public void setQuestion(QuestionRowItem questionItem) {
@@ -89,6 +82,15 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             this.author.setText(questionItem.getQuestion().getCreatedBy());
             this.numberOfAnswers.setText(""+questionItem.getAnswerCount());
             shouldDisplayQuestionAnswered(questionItem.isAnsweredByMe());
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, AnswerQuestionsActivity.class);
+                    intent.putExtra("questionId", questionRowItem.getQuestion().getId());
+                    context.startActivity(intent);
+                }
+            });
         }
 
 

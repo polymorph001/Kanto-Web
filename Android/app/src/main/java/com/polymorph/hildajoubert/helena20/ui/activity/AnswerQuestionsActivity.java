@@ -30,11 +30,16 @@ public class AnswerQuestionsActivity extends AppCompatActivity implements View.O
     private TextView answerEditText;
     private Button submitButton;
 
+    private String questionId;// = "test-question01"; // TODO
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_questions);
         initViews();
+
+        questionId = getIntent().getStringExtra("questionId");
+
         getQuestion();
     }
 
@@ -49,7 +54,7 @@ public class AnswerQuestionsActivity extends AppCompatActivity implements View.O
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mDatabase.child("kyc").child("question").child("test-question00").addListenerForSingleValueEvent(
+        mDatabase.child("kyc").child("question").child(questionId).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -75,7 +80,7 @@ public class AnswerQuestionsActivity extends AppCompatActivity implements View.O
 //                        if (dataSnapshot != null && dataSnapshot.getValue() != null) {
 //            pointsId = rootDataReference.child("points").child(userId).push().getKey();*
 
-        final String questionId = "test-question01"; // TODO
+
         String userAnswer = answerEditText.getText().toString();
         String answerId = mDatabase.child("question-answer").child(questionId).push().getKey();
         String userUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
