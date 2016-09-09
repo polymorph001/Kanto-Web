@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".ui.activity.KnowYourCompanyLauncherActivity" />
         <activity android:name=".ui.activity.AnswerQuestionsActivity" />
-        <activity android:name=".ViewQuestionsActivity" />
+        <activity android:name=".ui.activity.ViewQuestionsActivity" />
         <activity android:name=".ui.activity.SigninActivity" />
         <activity
             android:name=".ui.activity.ProfileActivity"

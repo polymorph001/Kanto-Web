@@ -31,28 +31,28 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView_list_author"
         android:layout_marginTop="15dp"
-        android:layout_below="@+id/textView_list_question"
+        android:layout_below="@id/textView_list_question"
         android:layout_toRightOf="@+id/textView_list_date"
         android:layout_marginStart="16dp"
         />
+
+
+    <ImageView
+        
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_alignTop="@id/textView_list_question"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="40dp"
+        android:id="@+id/imageView_list_answered" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView_list_numberAnswers"
         android:layout_marginTop="15dp"
-        android:layout_toLeftOf="@+id/imageView_list_answered"
-        android:layout_alignTop="@+id/textView_list_question"
+        android:layout_toLeftOf="@id/imageView_list_answered"
         />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark"
-        android:layout_alignTop="@+id/textView_list_question"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="40dp"
-        android:id="@+id/imageView_list_answered" />
 
 
 </RelativeLayout>

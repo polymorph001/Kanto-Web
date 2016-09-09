@@ -108,7 +108,7 @@ public class ViewQuestionsActivity extends AppCompatActivity {
     }
 
     private void updateData(){
-        QuestionRecyclerAdapter adapter = new QuestionRecyclerAdapter(questionRowItems);
+        QuestionRecyclerAdapter adapter = new QuestionRecyclerAdapter(questionRowItems, this);
         questionsList.setAdapter(adapter);
     }
 

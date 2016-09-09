@@ -1,6 +1,7 @@
 package com.polymorph.hildajoubert.helena20.ui.adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.polymorph.hildajoubert.helena20.models.Question;
 import com.polymorph.hildajoubert.helena20.R;
 import com.polymorph.hildajoubert.helena20.models.QuestionRowItem;
@@ -23,14 +26,16 @@ import java.util.List;
 public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private List<QuestionRowItem> questions;
+    private Context context;
 
-    public QuestionRecyclerAdapter(List<QuestionRowItem> questions) {
+    public QuestionRecyclerAdapter(List<QuestionRowItem> questions, Context context) {
         this.questions = questions;
+        this.context = context;
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_question, parent, false);
-        SettingsUploadDocumentRowHolder rowHolder = new SettingsUploadDocumentRowHolder(view);
+        SettingsUploadDocumentRowHolder rowHolder = new SettingsUploadDocumentRowHolder(view, context);
         return rowHolder;
     }
     @Override
@@ -52,9 +57,11 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         private ImageView answeredImage;
 
         private QuestionRowItem questionRowItem;
+        private Context context;
 
-        public SettingsUploadDocumentRowHolder(View view) {
+        public SettingsUploadDocumentRowHolder(View view, Context context) {
             super(view);
+            this.context = context;
             setupViews(view);
         }
 
@@ -88,9 +95,9 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         private void shouldDisplayQuestionAnswered(Boolean shouldDisplay) {
             if (shouldDisplay) {
-                answeredImage.setImageResource(R.drawable.com_facebook_button_like_icon_selected);
+                answeredImage.setImageDrawable(new IconDrawable(context,FontAwesomeIcons.fa_check_circle));
             }else{
-                answeredImage.setImageResource(R.drawable.com_facebook_auth_dialog_cancel_background);
+                answeredImage.setImageDrawable(new IconDrawable(context,FontAwesomeIcons.fa_times_circle));
             }
         }
     }
