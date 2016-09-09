@@ -7,6 +7,7 @@ import android.os.Bundle;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -21,7 +22,7 @@ public class SplashActivity extends BaseActivity {
     public void onStart() {
         super.onStart();
 
-        Observable.just(1)
+        Subscription sub = Observable.just(1)
                 .delay(2, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Integer>() {
@@ -32,6 +33,7 @@ public class SplashActivity extends BaseActivity {
                         finish();
                     }
                 });
+        subs.add(sub);
 
     }
 }
