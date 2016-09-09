@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.polymorph.hildajoubert.helena20.ui.activity.ViewQuestionsActivity;
+
 public class KnowYourCompanyLauncherActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
