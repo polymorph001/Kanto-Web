@@ -84,8 +84,9 @@ public class AnswerQuestionsActivity extends AppCompatActivity implements View.O
         String userAnswer = answerEditText.getText().toString();
         String answerId = mDatabase.child("question-answer").child(questionId).push().getKey();
         String userUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        Answer answer = new Answer(userAnswer, answerId, questionId, userUID);
+        Answer answer = new Answer(userAnswer, answerId, questionId, userUID, email);
 
         mDatabase.child("kyc").child("question-answer").child(questionId).child(answerId).setValue(answer);
 

@@ -12,16 +12,18 @@ public class Answer implements Parcelable{
     private String answerId;
     private String questionId;
     private String userId;
+    private String email;
 
     public Answer() {
 
     }
 
-    public Answer(String answer, String answerId, String questionId, String userId) {
+    public Answer(String answer, String answerId, String questionId, String userId, String email) {
         this.answer = answer;
         this.answerId = answerId;
         this.questionId = questionId;
         this.userId = userId;
+        this.email = email;
     }
 
     protected Answer(Parcel in) {
@@ -58,6 +60,8 @@ public class Answer implements Parcelable{
     public String getUserId() {
         return userId;
     }
+
+    public String getEmail() { return email;}
 
     @Override
     public int describeContents() {
