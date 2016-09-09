@@ -9,6 +9,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ui.activity.SigninActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_bird" />
+
     <!-- Login progress -->
     <ProgressBar
         android:id="@+id/login_progress"
@@ -21,7 +26,8 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        gra>
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -60,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
+                android:text="@string/action_sign_in_short"
                 android:textStyle="bold" />
 
         </LinearLayout>
