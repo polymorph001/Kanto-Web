@@ -16,12 +16,10 @@ import java.util.List;
 
 public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    List<DummyQuestion> questions;
-    Activity activity;
+    private List<Question> questions;
 
-    public QuestionRecyclerAdapter(List<DummyQuestion> questions, Activity activity) {
+    public QuestionRecyclerAdapter(List<Question> questions) {
         this.questions = questions;
-        this.activity = activity;
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,9 +31,8 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         SettingsUploadDocumentRowHolder uploadRow = (SettingsUploadDocumentRowHolder) holder;
         uploadRow.setQuestion(questions.get(position).getQuestion());
-        uploadRow.setDate(questions.get(position).getDate());
-        uploadRow.setAuthor(questions.get(position).getAuthor());
-        //setStuff
+        uploadRow.setDate(questions.get(position).getTimestamp());
+        uploadRow.setAuthor(questions.get(position).getCreatedBy());
     }
     @Override
     public int getItemCount() {
