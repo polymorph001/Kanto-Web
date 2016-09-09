@@ -36,6 +36,15 @@
         android:layout_marginStart="16dp"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_list_numberAnswers"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/imageView_list_answered"
+        android:layout_alignTop="@+id/textView_list_question"
+        />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -25,7 +25,6 @@ import com.google.firebase.database.Query;
 import com.jakewharton.rxbinding.view.RxView;
 import com.polymorph.hildajoubert.helena20.MainApplication;
 import com.polymorph.hildajoubert.helena20.R;
-import com.polymorph.hildajoubert.helena20.model.Question;
 import com.polymorph.hildajoubert.helena20.util.storage.Storage;
 
 import java.io.ByteArrayOutputStream;
