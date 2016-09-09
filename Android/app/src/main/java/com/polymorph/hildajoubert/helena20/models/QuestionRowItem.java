@@ -2,13 +2,14 @@ package com.polymorph.hildajoubert.helena20.models;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Percy on 2016/09/09.
  */
 
-public class QuestionRowItem {
+public class QuestionRowItem implements Serializable{
 
     private Question question;
     private List<Answer> answers;
