@@ -9,6 +9,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -56,6 +63,44 @@ public class FirebaseStorage implements Storage {
                     }
                 }));
             }
+        });
+    }
+
+    @NonNull
+    public <T> Observable<List<T>> observeValuesList(@NonNull final Query query, @NonNull final Class<T> clazz) {
+        return Observable.create(new Observable.OnSubscribe<List<T>>() {
+            @Override
+            public void call(final Subscriber<? super List<T>> subscriber) {
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<T> items = new ArrayList<T>();
+                        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                            T value = childSnapshot.getValue(clazz);
+                            if (value == null) {
+                                if (!subscriber.isUnsubscribed()) {
+                                    subscriber.onError(new Exception("unable to cast firebase data response to " + clazz.getSimpleName()));
+                                }
+                            } else {
+                                items.add(value);
+                            }
+                        }
+
+                        if (!subscriber.isUnsubscribed()) {
+                            subscriber.onNext(items);
+                            subscriber.onCompleted();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        if (!subscriber.isUnsubscribed()) {
+                            subscriber.onError(new Exception(error.toException()));
+                        }
+                    }
+                });
+            }
+
         });
     }
 

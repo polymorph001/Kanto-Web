@@ -4,13 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -23,13 +19,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.jakewharton.rxbinding.view.RxView;
 import com.polymorph.hildajoubert.helena20.MainApplication;
 import com.polymorph.hildajoubert.helena20.R;
+import com.polymorph.hildajoubert.helena20.model.Question;
 import com.polymorph.hildajoubert.helena20.util.storage.Storage;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -39,6 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public class ProfileActivity extends BaseActivity {
 
@@ -110,9 +111,6 @@ public class ProfileActivity extends BaseActivity {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
-
-
-
 
 
         user.updateProfile(profileUpdates)
@@ -191,7 +189,7 @@ public class ProfileActivity extends BaseActivity {
 //                    profileImage.setImageBitmap(bitmap);
 //                } catch (IOException e) {
 //                    e.printStackTrace();
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
