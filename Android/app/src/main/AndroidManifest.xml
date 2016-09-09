@@ -21,8 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".KnowYourCompanyLauncherActivity" />
-        <activity android:name=".AnswerQuestionsActivity"></activity>
+        <activity android:name=".ui.activity.KnowYourCompanyLauncherActivity" />
+        <activity android:name=".ui.activity.AnswerQuestionsActivity"></activity>
         <activity android:name=".ViewQuestionsActivity"></activity>
         <activity
             android:name=".ui.activity.ProfileActivity"
