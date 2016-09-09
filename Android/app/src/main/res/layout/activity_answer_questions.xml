@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.polymorph.hildajoubert.helena20.AnswerQuestionsActivity">
+    tools:context=".ui.activity.AnswerQuestionsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin"
         android:layout_weight="1"
+        android:background="#FFF"
         android:orientation="vertical"
-        android:background="#FFF">
+        android:padding="@dimen/activity_horizontal_margin">
 
         <TextView
             android:layout_width="match_parent"
@@ -28,29 +28,36 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:gravity="bottom"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/et_answer_question_answer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:hint="Type answer here" />
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
 
         <Button
             android:id="@+id/bt_answer_question_submit_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="17dp"
+            android:layout_alignParentBottom="true"
             android:text="Submit"
-            android:textAllCaps="false"/>
-    </LinearLayout>
+            android:textAllCaps="false"
+            android:background="@color/colorAccent"
+            android:textSize="17dp" />
+
+        <EditText
+            android:id="@+id/et_answer_question_answer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/bt_answer_question_submit_answer"
+            android:background="#FFF"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="Type answer here"
+            android:inputType="textMultiLine"
+            android:padding="5dp" />
+
+    </RelativeLayout>
 
 </LinearLayout>
