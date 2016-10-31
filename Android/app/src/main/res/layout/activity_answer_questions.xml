@@ -6,58 +6,83 @@
     android:orientation="vertical"
     tools:context=".ui.activity.AnswerQuestionsActivity">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:layout_weight="1"
         android:background="#FFF"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_horizontal_margin">
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Question" />
-
-        <TextView
-            android:id="@+id/tv_answer_question_question"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="-----------"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="bottom"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_horizontal_margin">
-
-        <Button
-            android:id="@+id/bt_answer_question_submit_answer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Submit"
-            android:textAllCaps="false"
-            android:background="@color/colorAccent"
-            android:textSize="17dp" />
-
-        <EditText
-            android:id="@+id/et_answer_question_answer"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/bt_answer_question_submit_answer"
-            android:background="#FFF"
-            android:ems="10"
-            android:gravity="top"
-            android:hint="Type answer here"
-            android:inputType="textMultiLine"
-            android:padding="5dp" />
+            android:orientation="vertical"
+            android:padding="10dp">
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Question"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:background="#999" />
+
+            <TextView
+                android:id="@+id/tv_answer_question_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="19sp"
+                tools:text="This is a test question to figure out the look and feel of the activity" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_weight="1"
+        android:background="#FFF"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <Button
+                android:id="@+id/bt_answer_question_submit_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorAccent"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:textSize="17dp" />
+
+            <EditText
+                android:id="@+id/et_answer_question_answer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/bt_answer_question_submit_answer"
+                android:background="#FFF"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="Type answer here"
+                android:inputType="textMultiLine"
+                android:padding="5dp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

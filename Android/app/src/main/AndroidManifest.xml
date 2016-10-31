@@ -26,6 +26,7 @@
         <activity android:name=".ui.activity.AnswerQuestionsActivity" />
         <activity android:name=".ui.activity.ViewQuestionsActivity" />
         <activity android:name=".ui.activity.SigninActivity" />
+        <activity android:name=".ui.activity.ViewAnswersActivity" />
         <activity
             android:name=".ui.activity.ProfileActivity"
             android:label="@string/title_activity_profile"
