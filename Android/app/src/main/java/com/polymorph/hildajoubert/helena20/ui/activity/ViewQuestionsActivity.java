@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,23 +17,31 @@ import com.polymorph.hildajoubert.helena20.models.Question;
 import com.polymorph.hildajoubert.helena20.models.QuestionRowItem;
 import com.polymorph.hildajoubert.helena20.ui.adapters.QuestionRecyclerAdapter;
 import com.polymorph.hildajoubert.helena20.R;
+import com.polymorph.hildajoubert.helena20.ui.views.ProgressView;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ViewQuestionsActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     RecyclerView questionsList;
     ArrayList<QuestionRowItem> questionRowItems;
-    ArrayList<Question> questions;
     ArrayList<Answer> answers;
+
+    @BindView(R.id.vProgress)
+    ProgressView vProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_questions);
+
+        ButterKnife.bind(this);
+
         questionRowItems = new ArrayList<>();
-        questions = new ArrayList<>();
         answers = new ArrayList<>();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -43,12 +52,13 @@ public class ViewQuestionsActivity extends AppCompatActivity {
     private void setupViews() {
         questionsList = (RecyclerView) findViewById(R.id.recyclerView_viewQuestions_listOfQuestions);
         questionsList.setLayoutManager(new LinearLayoutManager(this));
-        questions = new ArrayList<>();
 
         fetchQuestionsFromFireBase();
     }
 
     private void fetchQuestionsFromFireBase() {
+
+        vProgress.setVisibility(View.VISIBLE);
         mDatabase.child("kyc").child("question").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
@@ -61,10 +71,12 @@ public class ViewQuestionsActivity extends AppCompatActivity {
                             }
                             fetchAnswersForQuestion(questionRowItems, 0);
                         }
+
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.w("Question List", "get Question:onCancelled", databaseError.toException());
+                        vProgress.setVisibility(View.GONE);
                     }
                 });
     }
@@ -89,6 +101,7 @@ public class ViewQuestionsActivity extends AppCompatActivity {
                             if (index < questions.size() - 1) {
                                 fetchAnswersForQuestion(questions, index + 1);
                             }else{
+
                                 updateData();
                             }
                         }else{
@@ -103,6 +116,7 @@ public class ViewQuestionsActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.w("Question List", "get answersForQuestion:onCancelled", databaseError.toException());
+                        vProgress.setVisibility(View.GONE);
                     }
                 });
     }
@@ -110,6 +124,7 @@ public class ViewQuestionsActivity extends AppCompatActivity {
     private void updateData(){
         QuestionRecyclerAdapter adapter = new QuestionRecyclerAdapter(questionRowItems, this);
         questionsList.setAdapter(adapter);
+        vProgress.setVisibility(View.GONE);
     }
 
 
