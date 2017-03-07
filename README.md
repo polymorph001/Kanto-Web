@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 # Angular QuickStart Source
 [![Build Status][travis-badge]][travis-badge-url]
+=======
+# Kanto - Web version Angular2
+
+In-house Product Development Project
+>>>>>>> cf08e0195723719a80132dd900f8f0bd09999fd2
 
 This repository holds the TypeScript source code of the [angular.io quickstart](https://angular.io/docs/ts/latest/quickstart.html),
 the foundation for most of the documentation samples and potentially a good starting point for your application.
