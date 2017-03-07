@@ -1,4 +1,5 @@
-# Helena2.0
+# Kanto - Web version Angular2
+
 In-house Product Development Project
 
 _Features/Problems we can work on_
