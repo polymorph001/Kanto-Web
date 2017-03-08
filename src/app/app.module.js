@@ -12,10 +12,8 @@ var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var http_1 = require('@angular/http');
 var forms_1 = require('@angular/forms');
-//import {CustExtBrowserXhr} from './cust-ext-browser-xhr';
-//import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 var app_component_1 = require('./app.component');
-var user_component_1 = require('./components/user.component');
+var home_component_1 = require('./components/home.component');
 var about_component_1 = require('./components/about.component');
 var employees_component_1 = require('./components/employees.component');
 var app_routing_1 = require('./app.routing');
@@ -27,7 +25,7 @@ var AppModule = (function () {
     AppModule = __decorate([
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, app_routing_1.routing],
-            declarations: [app_component_1.AppComponent, user_component_1.UserComponent, about_component_1.AboutComponent, employees_component_1.EmployeesComponent],
+            declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, about_component_1.AboutComponent, employees_component_1.EmployeesComponent],
             bootstrap: [app_component_1.AppComponent],
         }), 
         __metadata('design:paramtypes', [])

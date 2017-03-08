@@ -21,7 +21,7 @@ var EmployeesComponent = (function () {
     EmployeesComponent = __decorate([
         core_1.Component({
             selector: 'employees',
-            template: "\n  <h1>List of all Employees</h1>\n  \n  <ul>\n    <li *ngFor=\"let user of users\"> {{user.FirstName}} </li>\n\n\n  </ul>\n  ",
+            template: "\n  <h1>List of all Employees</h1>\n  \n  <ul>\n    <li *ngFor=\"let user of users\"> {{user.FirstName}} {{user.MiddleName}} {{user.LastName}} </li>\n\n\n  </ul>\n  ",
             providers: [users_service_1.UsersServices]
         }), 
         __metadata('design:paramtypes', [users_service_1.UsersServices])

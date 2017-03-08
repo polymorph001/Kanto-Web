@@ -17,7 +17,7 @@ var UsersServices = (function () {
         console.log('UsersServices Initialised ...');
     }
     UsersServices.prototype.getUsers = function () {
-        return this.http.get('https://helena-4a3f6.firebaseio.com/users')
+        return this.http.get('https://helena-4a3f6.firebaseio.com/users.json')
             .map(function (res) { return res.json(); });
     };
     UsersServices = __decorate([

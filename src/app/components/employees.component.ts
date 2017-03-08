@@ -7,7 +7,7 @@ import { UsersServices } from '../services/users.service';
   <h1>List of all Employees</h1>
   
   <ul>
-    <li *ngFor="let user of users"> {{user.FirstName}} </li>
+    <li *ngFor="let user of users"> {{user.FirstName}} {{user.MiddleName}} {{user.LastName}} </li>
 
 
   </ul>
