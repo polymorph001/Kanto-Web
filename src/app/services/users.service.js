@@ -9,17 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var AppComponent = (function () {
-    function AppComponent() {
+var http_1 = require('@angular/http');
+require('rxjs/add/operator/map');
+var UsersServices = (function () {
+    function UsersServices(http) {
+        this.http = http;
+        console.log('UsersServices Initialised ...');
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'my-app',
-            template: "\n  <ul>\n  <li><a routerLink=\"/\">Home</a></li>\n   <li><a routerLink=\"/about\">About</a></li>\n  <li><a routerLink=\"/employees\">Employees</a></li>\n  </ul>\n  <hr />\n  <router-outlet></router-outlet>",
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    UsersServices.prototype.getUsers = function () {
+        return this.http.get('https://helena-4a3f6.firebaseio.com/users')
+            .map(function (res) { return res.json(); });
+    };
+    UsersServices = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http])
+    ], UsersServices);
+    return UsersServices;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.UsersServices = UsersServices;
+//# sourceMappingURL=users.service.js.map

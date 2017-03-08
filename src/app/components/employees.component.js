@@ -9,17 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var AppComponent = (function () {
-    function AppComponent() {
+var users_service_1 = require('../services/users.service');
+var EmployeesComponent = (function () {
+    function EmployeesComponent(usersService) {
+        var _this = this;
+        this.usersService = usersService;
+        this.usersService.getUsers().subscribe(function (users) {
+            _this.users = users;
+        });
     }
-    AppComponent = __decorate([
+    EmployeesComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            template: "\n  <ul>\n  <li><a routerLink=\"/\">Home</a></li>\n   <li><a routerLink=\"/about\">About</a></li>\n  <li><a routerLink=\"/employees\">Employees</a></li>\n  </ul>\n  <hr />\n  <router-outlet></router-outlet>",
+            selector: 'employees',
+            template: "\n  <h1>List of all Employees</h1>\n  \n  <ul>\n    <li *ngFor=\"let user of users\"> {{user.FirstName}} </li>\n\n\n  </ul>\n  ",
+            providers: [users_service_1.UsersServices]
         }), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+        __metadata('design:paramtypes', [users_service_1.UsersServices])
+    ], EmployeesComponent);
+    return EmployeesComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.EmployeesComponent = EmployeesComponent;
+//# sourceMappingURL=employees.component.js.map
